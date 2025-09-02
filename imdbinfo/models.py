@@ -180,7 +180,7 @@ class MovieDetail(SeriesMixin, BaseModel):
     year_end: Optional[int] = None
     duration: Optional[int] = None
     country_codes: List[str] = []
-    countries: List[str] = []
+    countries: Optional[List[str]] = []
     rating: Optional[float] = None
     metacritic_rating: Optional[int] = None
     votes: Optional[int] = None
