@@ -29,8 +29,8 @@ class SeriesMixin:
 
 
 class InfoSeries(BaseModel):
-    display_years: List[str] = []  # e.g. ['2013', '2014', '2015']
-    display_seasons: List[str] = []  # e.g. ['1', '2', '3']
+    display_years: Optional[List[str]] = []  # e.g. ['2013', '2014', '2015']
+    display_seasons: Optional[List[str]] = []  # e.g. ['1', '2', '3']
 
     @field_validator("display_years", mode="before")
     def filter_years(cls, value):
