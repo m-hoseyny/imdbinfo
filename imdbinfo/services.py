@@ -24,7 +24,7 @@ def get_movie(imdb_id: str, locale: str = None) -> MovieDetail:
     """Fetch movie details from IMDb using the provided IMDb ID as string,
     preserve the 'tt' prefix or not, it will be stripped in the function.
     """
-    lang = locale or get_locale()
+    lang = get_locale()
     if type(imdb_id) != str:
         imdb_id = str(imdb_id)
     imdb_id = imdb_id.lstrip("tt")
@@ -50,7 +50,7 @@ def get_movie(imdb_id: str, locale: str = None) -> MovieDetail:
 @lru_cache(maxsize=128)
 def search_title(title: str, locale: str = None) -> Optional[SearchResult]:
     """Search for a movie by title and return a list of titles and names."""
-    lang = locale or get_locale()
+    lang = get_locale()
     url = f"https://www.imdb.com/{lang}/find?q={title}&ref_=nv_sr_sm"
     logger.info("Searching for title '%s'", title)
     resp = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
@@ -74,7 +74,7 @@ def get_name(person_id: str, locale: str = None) -> Optional[PersonDetail]:
     """Fetch person details from IMDb using the provided IMDb ID.
     Preserve the 'nm' prefix or not, it will be stripped in the function.
     """
-    lang = locale or get_locale()
+    lang = get_locale()
     person_id = person_id.lstrip("nm")
     url = f"https://www.imdb.com/{lang}/name/nm{person_id}/"
     logger.info("Fetching person %s", person_id)
