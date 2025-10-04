@@ -125,11 +125,12 @@ def parse_json_movie(raw_json) -> Optional[MovieDetail]:
     data["production_budget"] = pjmespatch(
         "props.pageProps.mainColumnData.productionBudget.budget.[amount,currency]", raw_json, _join
     )
-    data["trailers"] = pjmespatch(
-        "props.pageProps.mainColumnData.primaryVideos.edges[].node.id",
-        raw_json,
-        lambda x: [f"{VIDEO_URL}{id}" for id in x if id],
-    )
+    # data["trailers"] = pjmespatch(
+    #     "props.pageProps.mainColumnData.primaryVideos.edges[].node.id",
+    #     raw_json,
+    #     lambda x: [f"{VIDEO_URL}{id}" for id in x if id],
+    # )
+    data["trailers"] = []
     data["interests"] = pjmespatch("props.pageProps.mainColumnData.interests.edges[].node.primaryText.text", raw_json)
     data["certificates"] = pjmespatch(
         "props.pageProps.mainColumnData.certificates.edges[].node.[country.id,country.text,rating,attributes[].text]",
