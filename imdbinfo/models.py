@@ -175,7 +175,7 @@ class MovieDetail(SeriesMixin, BaseModel):
     certificates: Dict[str, Tuple[str, str]] = {}
     mpaa: Optional[str] = None
     directors: List[Person] = []
-    stars: List[Person] = []
+    stars: Optional[List[Person]] = []
     year: Optional[int] = None
     year_end: Optional[int] = None
     duration: Optional[int] = None
@@ -202,7 +202,7 @@ class MovieDetail(SeriesMixin, BaseModel):
     summaries: List[str] = []
     synopses: List[str] = []
     production: List[str] = []
-    categories: Dict[str, List[Union[Person, CastMember]]] = {}
+    categories: Optional[Dict[str, List[Union[Person, CastMember]]]] = {}
 
     @field_validator("languages", "country_codes", "genres", mode="before")
     def none_is_list(cls, value):

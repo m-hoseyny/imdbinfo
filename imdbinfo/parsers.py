@@ -187,19 +187,20 @@ def parse_json_movie(raw_json) -> Optional[MovieDetail]:
     data["languages_text"] = pjmespatch("props.pageProps.mainColumnData.spokenLanguages.spokenLanguages[].text", raw_json)
     # categories
     data["categories"] = {}
-    for category in pjmespatch("props.pageProps.mainColumnData.categories[]", raw_json):
-        data["categories"].setdefault(category["id"], [])
-        jobtitle = category["name"]
-        category_id = category["id"]
-        for category_person in category["section"]["items"]:
-            if category_id == "cast":
-                # cast is a special case, it has character and order
-                person = CastMember.from_cast(category_person)
-            else:
-                category_person["jobTitle"] = jobtitle
-                person = Person.from_category(category_person)
-            person = person
-            data["categories"][category["id"]].append(person)
+    if pjmespatch("props.pageProps.mainColumnData.categories[]", raw_json):
+        for category in pjmespatch("props.pageProps.mainColumnData.categories[]", raw_json):
+            data["categories"].setdefault(category["id"], [])
+            jobtitle = category["name"]
+            category_id = category["id"]
+            for category_person in category["section"]["items"]:
+                if category_id == "cast":
+                    # cast is a special case, it has character and order
+                    person = CastMember.from_cast(category_person)
+                else:
+                    category_person["jobTitle"] = jobtitle
+                    person = Person.from_category(category_person)
+                person = person
+                data["categories"][category["id"]].append(person)
 
     # If Series/Episode kind
     # tvMovie,short,movie,tvEpisode,tvMiniseries,tvSpecial,tvShort,videoGame,video,musicVideo,podcastEpisode,podcastSeries
